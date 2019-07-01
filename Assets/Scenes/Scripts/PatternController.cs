@@ -26,21 +26,24 @@ namespace PatternMaker {
             for(int i=0; i<w*h; i++) this.Pixels[i] = null;
         }
 
+        public void SetSize(Vector2Int dimm) {
+            this.SetSize(dimm.x, dimm.y);
+        }
+
         public void RandomPattern(int count) {
             var availableIndices = new List<int>();
             for (int i=this.PatternSize.x * this.PatternSize.y-1; i>=0; i--)
                 availableIndices.Add(i);
 
             if (count > availableIndices.Count) {
-                Debug.LogWarning("PatternController.RandomPattern received count value of "+count.ToString()+" which is too much for the current PatternSize ("+this.PatternSize.ToString()+")");
+                Debug.Log("PatternController.RandomPattern received count value of "+count.ToString()+" which is too much for the current PatternSize ("+this.PatternSize.ToString()+")");
                 return;
             }
 
             // load random selection of indices into selectedIndices
             var selectedIndices = new int[count];
             var rnd = new System.Random();
-            for (int i=0; i< count; i++)
-            while (count > 0 && availableIndices.Count > 0) {
+            for (int i=0; i< count; i++) {
                 int idx = rnd.Next(availableIndices.Count);
                 selectedIndices[i] = availableIndices[idx];
                 availableIndices.RemoveAt(idx);
@@ -62,7 +65,7 @@ namespace PatternMaker {
         private void Toggle(int pixelIndex) {
             if (this.Pixels[pixelIndex] != null) { // pixel is ON?
                 // turn it OFF
-                Destroy(this.Pixels[pixelIndex]);
+                Destroy(this.Pixels[pixelIndex].gameObject);
                 this.Pixels[pixelIndex] = null;
                 return;
             }
@@ -73,9 +76,9 @@ namespace PatternMaker {
         }
 
         private RectTransform CreatePixel(int idx) {
-            var go = Instantiate(this.PixelPrefab.gameObject);
+            var go = Instantiate(this.PixelPrefab.gameObject, this.PixelPrefab.parent);
             var rt = go.GetComponent<RectTransform>();
-            int y = (int)Math.Floor(((float)idx / this.PatternSize.x));
+            int y = (int)Math.Floor(((float)idx / (float)this.PatternSize.x));
             int x = idx - y * this.PatternSize.x;
             ConfigPixel(rt, x, y);
             go.SetActive(true);
@@ -84,9 +87,10 @@ namespace PatternMaker {
 
         private void ConfigPixel(RectTransform rt, int x, int y) {
             var parent = rt.parent.GetComponent<RectTransform>();
-            Vector2 pixSize = parent.sizeDelta / this.PatternSize;
-            rt.sizeDelta = pixSize;
-            rt.transform.position += new Vector3(pixSize.x * x, pixSize.y * y, 0);
+            // Debug.Log("Parent size: "+parent.sizeDelta.ToString());
+            var size = new Vector2(parent.sizeDelta.x / this.PatternSize.x, parent.sizeDelta.y / this.PatternSize.y);
+            rt.sizeDelta = size;
+            rt.anchoredPosition += new Vector2(size.x * x, -size.y * y);
         }
     }
 }

@@ -2,7 +2,8 @@
     "name": "PatternMaker",
     "references": [
         "GUID:031a6a73b785a4abdab8b31da554f1eb",
-        "GUID:96fc125addfba4a21bb620d3d64a89e7"
+        "GUID:96fc125addfba4a21bb620d3d64a89e7",
+        "GUID:42a0f518068924730b494767a97f4973"
     ],
     "optionalUnityReferences": [],
     "includePlatforms": [],

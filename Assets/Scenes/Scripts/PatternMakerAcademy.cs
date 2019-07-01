@@ -15,7 +15,7 @@ namespace PatternMaker {
 
         public override void InitializeAcademy() {
             PatternWidth = (int)base.resetParameters["PatternWidth"];
-            PatternWidth = (int)base.resetParameters["PatternHeight"];
+            PatternHeight = (int)base.resetParameters["PatternHeight"];
             PatternCount = (int)base.resetParameters["PatternCount"];
         }
 
