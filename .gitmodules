@@ -1,0 +1,3 @@
+[submodule "Assets/lib/fusetools"]
+	path = Assets/lib/fusetools
+	url = https://gitlab.com/shortnotion/fusetools.git
