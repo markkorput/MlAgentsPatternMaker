@@ -1,3 +1,6 @@
 [submodule "Assets/lib/fusetools"]
 	path = Assets/lib/fusetools
 	url = https://gitlab.com/shortnotion/fusetools.git
+[submodule "Assets/lib/C-Sharp-Promise"]
+	path = Assets/lib/C-Sharp-Promise
+	url = https://github.com/markkorput/C-Sharp-Promise.git

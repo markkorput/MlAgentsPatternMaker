@@ -1,0 +1,16 @@
+{
+    "name": "PatternMaker",
+    "references": [
+        "GUID:031a6a73b785a4abdab8b31da554f1eb",
+        "GUID:96fc125addfba4a21bb620d3d64a89e7"
+    ],
+    "optionalUnityReferences": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": []
+}
