@@ -62,14 +62,14 @@ namespace PatternMaker {
         public override void AgentAction(float[] vectorAction, string textAction)
         {
             // Apply values in vectorAction to our scene;
-            float actionX = Mathf.Clamp(vectorAction[0], 0, 1.0f);
-            float actionY = Mathf.Clamp(vectorAction[1], 0, 1.0f);
-            float actionOp = Mathf.Clamp(vectorAction[2], 0, 1.0f);
+            float actionX = Mathf.Clamp(vectorAction[0], -1f, 1f) * 0.5f + 0.5f;
+            float actionY = Mathf.Clamp(vectorAction[1], -1f, 1f) * 0.5f + 0.5f;
+            float actionOp = Mathf.Clamp(vectorAction[2], -1f, 1f);
 
             Operation op;
             // if (actionOp >= 0.75f) op = Operation.Disable;
             // else if (actionOp >= 0.50f) op = Operation.Enable;
-            if (actionOp >= 0.5f) op = Operation.Toggle;
+            if (actionOp >= 0.0f) op = Operation.Toggle;
             else op = Operation.DoNothing;
 
 
@@ -166,32 +166,39 @@ namespace PatternMaker {
             // }
         }
 
-        public void FixedUpdate()
-        {
-            WaitTimeInference();
+        public void Update() {
+            RequestDecision();
         }
+    //     public void FixedUpdate()
+    //     {
+    //         WaitTimeInference();
+    //     }
 
-        private void WaitTimeInference()
-        {
-            foreach(var cam in renderCameras)
-                cam.Render();
+    //     private void WaitTimeInference()
+    //     {
+    //         if (!academy.GetIsInference())
+    //         {
+    //             foreach(var cam in renderCameras)
+    //                 cam.Render();
 
-            if (!academy.GetIsInference())
-            {
-                RequestDecision();
-            }
-            else
-            {
-                if (timeSinceDecision >= timeBetweenDecisionsAtInference)
-                {
-                    timeSinceDecision = 0f;
-                    RequestDecision();
-                }
-                else
-                {
-                    timeSinceDecision += Time.fixedDeltaTime;
-                }
-            }
-        }
+    //             RequestDecision();
+    //         }
+    //         else
+    //         {
+    //             if (timeSinceDecision >= timeBetweenDecisionsAtInference)
+    //             {
+    //                 timeSinceDecision = 0f;
+
+    //                 foreach(var cam in renderCameras)
+    //                     cam.Render();
+
+    //                 RequestDecision();
+    //             }
+    //             else
+    //             {
+    //                 timeSinceDecision += Time.fixedDeltaTime;
+    //             }
+    //         }
+    //     }
     }
 }

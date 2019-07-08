@@ -206,20 +206,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brain: {fileID: 11400000, guid: fecddbc43cc294097be1f3243dd30116, type: 2}
   agentParameters:
-    agentCameras: []
-    agentRenderTextures:
-    - {fileID: 8400000, guid: d87508a2ad2924ff8a60f8d553b2d72f, type: 2}
-    - {fileID: 8400000, guid: c8a011dc9096c438c81717c1cce74a04, type: 2}
+    agentCameras:
+    - {fileID: 428384818}
+    - {fileID: 757407157}
+    agentRenderTextures: []
     maxStep: 0
     resetOnDone: 1
-    onDemandDecision: 1
+    onDemandDecision: 0
     numberOfActionsBetweenDecisions: 1
   AgentPattern: {fileID: 2007130332}
   ExamplePattern: {fileID: 596916256}
   renderCameras:
   - {fileID: 428384818}
   - {fileID: 757407157}
-  timeBetweenDecisionsAtInference: 2
+  timeBetweenDecisionsAtInference: 0.2
 --- !u!20 &428384818 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 3022010336574012190, guid: 983832ecb68f548eebf1f3cad66d1453,
