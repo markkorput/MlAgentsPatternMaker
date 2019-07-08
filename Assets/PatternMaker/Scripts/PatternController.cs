@@ -22,17 +22,24 @@ namespace PatternMaker {
         }
 
         public void SetSize(int w, int h) {
-            this.ClearPattern();
+            if (this.Pixels != null)
+                foreach(var pix in this.Pixels)
+                    Destroy(pix.gameObject);
 
             this.PatternSize = new Vector2Int(w,h);
             this.Pixels = new RectTransform[w*h];
-            for(int i=0; i<w*h; i++) this.Pixels[i] = null;
+            for(int i=0; i<w*h; i++)
+                this.Pixels[i] = this.CreatePixel(i);
+            this.ClearPattern();
+            // this.ClearPattern();
+            // this.PatternSize = new Vector2Int(w,h);
+            // this.Pixels = new RectTransform[w*h];
+            // for(int i=0; i<w*h; i++) this.Pixels[i] = null;
         }
 
         public void SetSize(Vector2Int dimm) {
             this.SetSize(dimm.x, dimm.y);
         }
-
 
         public void RandomPattern(int count) {
             var availableIndices = new List<int>();
@@ -63,27 +70,31 @@ namespace PatternMaker {
         public void ClearPattern() {
             if (this.Pixels == null) return;
 
-            for (int i=0; i<this.Pixels.Length; i++) {
-                if (this.Pixels[i] != null) {
-                    Destroy(this.Pixels[i].gameObject);
-                    this.Pixels[i] = null;
-                }
-            }
+            // for (int i=0; i<this.Pixels.Length; i++) {
+            //     if (this.Pixels[i] != null) {
+            //         Destroy(this.Pixels[i].gameObject);
+            //         this.Pixels[i] = null;
+            //     }
+            // }
+
+            foreach(var pix in this.Pixels)
+                pix.gameObject.SetActive(false);
         }
 
         public void Toggle(int pixelIndex) {
             if (this.Pixels == null) return;
 
-            if (this.Pixels[pixelIndex] != null) { // pixel is ON?
-                // turn it OFF
-                Destroy(this.Pixels[pixelIndex].gameObject);
-                this.Pixels[pixelIndex] = null;
-                return;
-            }
+            this.Pixels[pixelIndex].gameObject.SetActive(!this.Pixels[pixelIndex].gameObject.activeSelf);
+            // if (this.Pixels[pixelIndex] != null) { // pixel is ON?
+            //     // turn it OFF
+            //     Destroy(this.Pixels[pixelIndex].gameObject);
+            //     this.Pixels[pixelIndex] = null;
+            //     return;
+            // }
 
-            // Pixel is OFF, turn it ON (spawn pixel)
-            var pix = this.CreatePixel(pixelIndex);
-            this.Pixels[pixelIndex] = pix;
+            // // Pixel is OFF, turn it ON (spawn pixel)
+            // var pix = this.CreatePixel(pixelIndex);
+            // this.Pixels[pixelIndex] = pix;
         }
 
         public bool[] GetPatternAsBooleans() {
@@ -92,7 +103,8 @@ namespace PatternMaker {
             int len = this.Pixels.Length;
             bool[] bools = new bool[len];
             for (int i=0; i<len; i++)
-                bools[i] = this.Pixels[i] != null;
+                // bools[i] = this.Pixels[i] != null;
+                bools[i] = this.Pixels[i].gameObject.activeSelf;
 
             return bools;
         }
