@@ -13,9 +13,12 @@ namespace PatternMaker {
         private RectTransform[] Pixels;
 
         private void Start() {
-            this.Pixels = new RectTransform[0];
-            this.PatternSize = new Vector2Int(0,0);
+            // this.PatternSize = new Vector2Int(0,0);
             this.PixelPrefab.gameObject.SetActive(false);
+        }
+
+        public Vector2Int GetSize() {
+            return this.PatternSize;
         }
 
         public void SetSize(int w, int h) {
@@ -29,6 +32,7 @@ namespace PatternMaker {
         public void SetSize(Vector2Int dimm) {
             this.SetSize(dimm.x, dimm.y);
         }
+
 
         public void RandomPattern(int count) {
             var availableIndices = new List<int>();
@@ -57,12 +61,19 @@ namespace PatternMaker {
         }
 
         public void ClearPattern() {
-            foreach(var pix in this.Pixels)
-                if (pix != null)
-                    Destroy(pix.gameObject);
+            if (this.Pixels == null) return;
+
+            for (int i=0; i<this.Pixels.Length; i++) {
+                if (this.Pixels[i] != null) {
+                    Destroy(this.Pixels[i].gameObject);
+                    this.Pixels[i] = null;
+                }
+            }
         }
 
-        private void Toggle(int pixelIndex) {
+        public void Toggle(int pixelIndex) {
+            if (this.Pixels == null) return;
+
             if (this.Pixels[pixelIndex] != null) { // pixel is ON?
                 // turn it OFF
                 Destroy(this.Pixels[pixelIndex].gameObject);
@@ -73,6 +84,17 @@ namespace PatternMaker {
             // Pixel is OFF, turn it ON (spawn pixel)
             var pix = this.CreatePixel(pixelIndex);
             this.Pixels[pixelIndex] = pix;
+        }
+
+        public bool[] GetPatternAsBooleans() {
+            if (this.Pixels == null) return new bool[]{};
+
+            int len = this.Pixels.Length;
+            bool[] bools = new bool[len];
+            for (int i=0; i<len; i++)
+                bools[i] = this.Pixels[i] != null;
+
+            return bools;
         }
 
         private RectTransform CreatePixel(int idx) {
