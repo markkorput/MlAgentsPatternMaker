@@ -57,14 +57,31 @@ namespace PatternMaker {
         {
             // There are no numeric observations to collect as this environment uses visual
             // observations.
+
+            // base.AddVectorObs(0.5);
+
+            bool[] us = this.AgentPattern.GetPatternAsBooleans();
+            bool[] ex = this.ExamplePattern.GetPatternAsBooleans();
+            float[] vec1 = new float[ex.Length];
+            float[] vec2 = new float[ex.Length];
+            for (int i=0; i<ex.Length; i++) {
+                vec1[i] = ex[i] ? 1.0f : 0.0f;
+                vec2[i] = (us[i] ^ ex[i]) ? 0.0f : 1.0f;
+            }
+
+            base.AddVectorObs(vec1);
+            base.AddVectorObs(vec2);
         }
 
         public override void AgentAction(float[] vectorAction, string textAction)
         {
             // Apply values in vectorAction to our scene;
-            float actionX = Mathf.Clamp(vectorAction[0], -1f, 1f) * 0.5f + 0.5f;
-            float actionY = Mathf.Clamp(vectorAction[1], -1f, 1f) * 0.5f + 0.5f;
-            float actionOp = Mathf.Clamp(vectorAction[2], -1f, 1f);
+            // float actionX = Mathf.Clamp(vectorAction[0], -1f, 1f) * 0.5f + 0.5f;
+            // float actionY = Mathf.Clamp(vectorAction[1], -1f, 1f) * 0.5f + 0.5f;
+            // float actionOp = Mathf.Clamp(vectorAction[2], -1f, 1f);
+
+            float actionPix = Mathf.Clamp(vectorAction[0], -1f, 1f) * 0.5f + 0.5f;
+            float actionOp = Mathf.Clamp(vectorAction[1], -1f, 1f);
 
             Operation op;
             // if (actionOp >= 0.75f) op = Operation.Disable;
@@ -78,9 +95,9 @@ namespace PatternMaker {
 
             if (op.Equals(Operation.Toggle)) {
                 var patternSize = this.AgentPattern.GetSize();
-                int ix = Mathf.FloorToInt((patternSize.x-1) * actionX);
-                int iy = Mathf.FloorToInt((patternSize.y-1) * actionY);
-                int idx = patternSize.x * iy + ix;
+                // int ix = Mathf.FloorToInt((patternSize.x-1) * actionX);
+                // int iy = Mathf.FloorToInt((patternSize.y-1) * actionY);
+                int idx = Mathf.FloorToInt((patternSize.x * patternSize.y -1) * actionPix);
 
                 if (idx < 0 || idx > this.pixelCount) {
                     Debug.Log("Invalid pixel index: "+idx.ToString());

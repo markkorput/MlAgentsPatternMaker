@@ -13,20 +13,13 @@ MonoBehaviour:
   m_Name: PatternMakerLearningBrain
   m_EditorClassIdentifier: 
   brainParameters:
-    vectorObservationSize: 0
+    vectorObservationSize: 50
     numStackedVectorObservations: 1
-    vectorActionSize: 03000000
-    cameraResolutions:
-    - width: 256
-      height: 256
-      blackAndWhite: 1
-    - width: 256
-      height: 256
-      blackAndWhite: 1
+    vectorActionSize: 02000000
+    cameraResolutions: []
     vectorActionDescriptions:
-    - X
-    - Y
-    - Operation (Do Nothing | Toggle | Enable | Disable)
+    - idx
+    - op
     vectorActionSpaceType: 1
   model: {fileID: 0}
   inferenceDevice: 0

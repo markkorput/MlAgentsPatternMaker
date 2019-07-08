@@ -206,13 +206,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brain: {fileID: 11400000, guid: fecddbc43cc294097be1f3243dd30116, type: 2}
   agentParameters:
-    agentCameras:
-    - {fileID: 428384818}
-    - {fileID: 757407157}
+    agentCameras: []
     agentRenderTextures: []
     maxStep: 0
     resetOnDone: 1
-    onDemandDecision: 0
+    onDemandDecision: 1
     numberOfActionsBetweenDecisions: 1
   AgentPattern: {fileID: 2007130332}
   ExamplePattern: {fileID: 596916256}
